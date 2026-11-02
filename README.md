@@ -65,7 +65,8 @@ I learned SPL searches that would be useful for a SOC analyst monitoring Failed 
 I learned that windows events can have more than one account name values, which should be remembered for writing SPL searches grouping by Account_Name to understand that there can be an overlap.
 I learned how to make a scheduled alert from a SPL search which runs automatically so a SOC analyst can detect patterns that seem malicious without having to do a SPL search for every sing time something happens.
 I learned how to create a dashboard to visualize data to better understand it. 
-
+# Conclusion
+In conclusion I gained hands on experience using the SIEM tool Splunk Enterprise by learning SPL to understand security events by filtering or organizing them, creating alerts for autonomous monitoring, and creating dashboards to visualize the events better. Doing this project made me understand how a SOC analyst can use SIEM tools such as Splunk Enterprise to investigate security logs for malicious activity.
 
 
 
