@@ -6,7 +6,9 @@ In this project I used Splunk Enterprise to collect and analyze windows security
 
 # Tools used
 -Splunk Enterprise 10.6.1.1
+
 -OS: Windows 11
+
 -Splunk Search Processing Language (SPL)
 
 # 1. Setting up Splunk Enterprise
