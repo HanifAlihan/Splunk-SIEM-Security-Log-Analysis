@@ -45,7 +45,7 @@ To isolate only the failed login attempts on the Security-test account, I had th
 
 # 3. Detecting Repeated Failed Logins
 After looking at the failed login attempts I created a search that identifies failed login attempts that happen three times in five minute intervals. As expected when I ran the search it detected three failed login attempts in the same five minute interval. Three failed login attempts in five minutes can mean someone is guessing passwords but not necessarily that it is from an attack. If this search had where count>=10 and it was detected, this would be pretty suspicious. 
-The SPL search is  index=windows_security EventCode=4625 |where Account_Name="Security-test" |bin _time span 5m |stats count by _time |where count>=3 |sort- _time
+The SPL search is  index=windows_security EventCode=4625 |where Account_Name="Security-test" |bin _time span=5m |stats count by _time |where count>=3 |sort- _time
 <img width="1917" height="1111" alt="Screenshot 2026-11-01 191314" src="https://github.com/user-attachments/assets/e3832e03-796d-495b-89a0-2b38012d57f0" />
 
 
