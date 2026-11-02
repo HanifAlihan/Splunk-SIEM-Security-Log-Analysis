@@ -25,6 +25,19 @@ I made sure the Windows Security events was collected by Splunk I ran index=wind
 <img width="1917" height="1102" alt="Screenshot 2026-11-01 180428" src="https://github.com/user-attachments/assets/5ae6a0f6-bf1f-4c4a-b035-a1aac5045cd1" />
 
 
+# 2. Investigating Failed Login Attempts
+For this project because I am analyzing authentication logs, I focused on Event ID 4625 which represents a failed windows login attempt. To generate failed windows login attempts, I made a windows account called Security-test and then on purposely typed in the wrong password for this account 3 times. Then on Splunk I searched for failed login events with index=windows_security EventCode=4625.
+<img width="1000" height="788" alt="Screenshot 2026-11-01 183121" src="https://github.com/user-attachments/assets/b4b95303-1a53-4efb-96db-737d3e49b1bc" />
+<img width="945" height="196" alt="image" src="https://github.com/user-attachments/assets/c0237420-0f36-4e83-b0cd-b91e3e170447" />
+<img width="1335" height="857" alt="Screenshot 2026-11-01 183454" src="https://github.com/user-attachments/assets/e2e73617-cfa1-4182-abac-0705c6be92ff" />
+
+
+I expanded the > for the most recent at the top and examined fields such as Account_Name and Failure_Reason.
+<img width="1917" height="1096" alt="Screenshot 2026-11-01 183610" src="https://github.com/user-attachments/assets/e14c804f-099f-4f23-bae3-c0156a3d9f36" />
+<img width="1917" height="1086" alt="Screenshot 2026-11-01 183627" src="https://github.com/user-attachments/assets/36177d3a-6666-43cd-a034-a98b64a53e8b" />
+
+
+
 
 
 
