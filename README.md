@@ -34,7 +34,7 @@ For this project because I am analyzing authentication logs, I focused on Event 
 
 To analyze the failed login attempts I did on the Security-test by running SPL searches. The SPL search index=windows_security EventCode=4625 | stats count by Account_Name to look at how many events happened for each account name in the last 60 minutes.
 <img width="1915" height="1112" alt="Screenshot 2026-11-01 184018" src="https://github.com/user-attachments/assets/cd077b83-7e95-4e97-ab8a-fed61fd29462" />
-Running this SPL search made me learn that having the amount of counts by account name is flawed for finding out how much events happen for each account. The results show HANIFSLAPTOP$ and Security-test as two individual accounts with different amounts of counts of events for each. This could look like seven events from those two accounts, but there is an overlap because all of the events for Security-test happened on the HANIFSLAPTOP$ account because that represents my laptop. 
+Running this SPL search made me learn that having the counts shown by account name is flawed for finding out how much events happen for each account. The results show HANIFSLAPTOP$ and Security-test as two individual accounts with different amounts of counts of events for each. This could look like seven events from those two accounts, but there is an overlap because HANIFSLAPTOP$ is my laptop account and a windows event can show a computer account and a system account. This means the same event can show for the Account_name value twice when grouping by Account_Name.
 
 To isolate only the failed login attempts on the Security-test account, I had the SPL search index=windows_security EventCode=4625 |where Account_Name="Security-test" |table Account_Name Failure_Reason. This search would be useful for analyst who already is suspicious of a specific account and wants to isolate the events only for that account. 
 <img width="1917" height="1095" alt="Screenshot 2026-11-01 184859" src="https://github.com/user-attachments/assets/b5c3a17c-c58a-425a-bf83-10b8a6678edc" />
@@ -60,13 +60,14 @@ The one at the bottom called Failed Login Attempts By Account Name shows the num
 <img width="1917" height="1095" alt="Screenshot 2026-11-01 193727" src="https://github.com/user-attachments/assets/5483feaf-11a5-489e-b0c8-53361872bd93" />
 As I explained in section 2, Windows events can have two different account name values, which is to be remembered for the second chart because three of the four failed login attempts for the HANIFSLAPTOP$ bar is the same event as the three login attempts for the Security-test bar.
 
-# 6. Findings and Conclusion
+# 6. Findings
 I was able to successfully create three failed Windows login attempt events that was able to be collected by Splunk and analyzed. 
 I learned SPL searches that would be useful for a SOC analyst monitoring Failed login attempt data trying to understand what happened.
 I learned that windows events can have more than one account name values, which should be remembered for writing SPL searches grouping by Account_Name to understand that there can be an overlap.
 I learned how to make a scheduled alert from a SPL search which runs automatically so a SOC analyst can detect patterns that seem malicious without having to do a SPL search for every sing time something happens.
 I learned how to create a dashboard to visualize data to better understand it. 
-# Conclusion
+
+# 7. Conclusion
 In conclusion I gained hands on experience using the SIEM tool Splunk Enterprise by learning SPL to understand security events by filtering or organizing them, creating alerts for autonomous monitoring, and creating dashboards to visualize the events better. Doing this project made me understand how a SOC analyst can use SIEM tools such as Splunk Enterprise to investigate security logs for malicious activity.
 
 
