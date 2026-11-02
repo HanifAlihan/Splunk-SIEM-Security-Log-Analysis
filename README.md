@@ -32,18 +32,19 @@ For this project because I am analyzing authentication logs, I focused on Event 
 <img width="1335" height="857" alt="Screenshot 2026-11-01 183454" src="https://github.com/user-attachments/assets/e2e73617-cfa1-4182-abac-0705c6be92ff" />
 
 
-To analyze the failed login attempts I did on the Security-test by running SPL searches. This included certain commands such as |stats count by Accounts_Name to look at how many events happened for each account name in the last 60 minutes.
+To analyze the failed login attempts I did on the Security-test by running SPL searches. The SPL search index=windows_security EventCode=4625 | stats count by Account_Name to look at how many events happened for each account name in the last 60 minutes.
 <img width="1915" height="1112" alt="Screenshot 2026-11-01 184018" src="https://github.com/user-attachments/assets/cd077b83-7e95-4e97-ab8a-fed61fd29462" />
 Running this SPL search made me learn that having the amount of counts by account name is flawed for finding out how much events happen for each account. The results show HANIFSLAPTOP$ and Security-test as two individual accounts with different amounts of counts of events for each. This could look like seven events from those two accounts, but there is an overlap because all of the events for Security-test happened on the HANIFSLAPTOP$ account because that represents my laptop. 
 
-To isolate only the failed login attempts on the Security-test account, I had a search that included where Account_Name="Security-test" and |table Account_Name Failure_Reason. This search would be useful for analyst who already is suspicious of a specific account and wants to isolate the events only for that account. 
+To isolate only the failed login attempts on the Security-test account, I had the SPL search index=windows_security EventCode=4625 |where Account_Name="Security-test" |table Account_Name Failure_Reason. This search would be useful for analyst who already is suspicious of a specific account and wants to isolate the events only for that account. 
 <img width="1917" height="1095" alt="Screenshot 2026-11-01 184859" src="https://github.com/user-attachments/assets/b5c3a17c-c58a-425a-bf83-10b8a6678edc" />
 
 
 
 # 3. Detecting Repeated Failed Logins
-After looking at the failed login attempts I created a search that identifies failed login attempts that happen three times in five minute intervals. As expected when I ran the search it detected three failed login attempts in the same five minute interval. Three failed login attempts in five minutes can mean someone is guessing passwords but not necessarily that it is from an attack. If this search had where count>=10 and it was detected, this would be pretty suspicious.
+After looking at the failed login attempts I created a search that identifies failed login attempts that happen three times in five minute intervals. As expected when I ran the search it detected three failed login attempts in the same five minute interval. Three failed login attempts in five minutes can mean someone is guessing passwords but not necessarily that it is from an attack. If this search had where count>=10 and it was detected, this would be pretty suspicious. The SPL search is  index=windows_security EventCode=4625 |where Account_Name="Security-test" |bin -time span 5m |stats count by _time |where count>=3 |sort- _time
 <img width="1917" height="1111" alt="Screenshot 2026-11-01 191314" src="https://github.com/user-attachments/assets/e3832e03-796d-495b-89a0-2b38012d57f0" />
+<img width="1917" height="1111" alt="Screenshot 2026-11-01 191314" src="https://github.com/user-attachments/assets/d663f359-1599-45c9-aaf3-6b06863f9440" />
 
 
 # 4. Creating a Scheduled Alert 
